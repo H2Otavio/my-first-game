@@ -63,7 +63,7 @@ function preload(){
   imagemGameOver = loadImage('imagens/cenario/tobecontinue.png');
   somDoPulo = loadSound('sons/Yoda Fon.mp3');
   somGameOver = createAudio('sons/roundabout.mp3');
-  somDoJogo = createAudio('sons/trilha_jogo.mp3');
+  somDoJogo = createAudio('sons/pneuQueimado.mp3');
 }
 
 function setup() {

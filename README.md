@@ -1,6 +1,6 @@
 # my-first-game
 
-This is the first game I ever developed. It's made using JavaScritp and the library P5.js.
+This is the first game I ever developed. It was made using JavaScritp and the library P5.js.
 
 You can play in your browser using the link below.
 

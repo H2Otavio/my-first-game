@@ -60,8 +60,10 @@ function preload(){
   imagemCenario = loadImage('imagens/cenario/floresta.png');
   imagemPersonagem = loadImage('imagens/personagem/correndo.png');
   imagemInimigo = loadImage('imagens/inimigos/gotinha.png');
+  imagemGameOver = loadImage('imagens/cenario/tobecontinue.png');
   somDoPulo = loadSound('sons/Yoda Fon.mp3');
-  somDoJogo = loadSound('sons/trilha_jogo.mp3');
+  somGameOver = createAudio('sons/roundabout.mp3');
+  somDoJogo = createAudio('sons/pneuQueimado.mp3');
 }
 
 function setup() {
@@ -69,14 +71,21 @@ function setup() {
   cenario = new Cenario(imagemCenario, 2);
   personagem = new Personagem(matrizPersonagem, imagemPersonagem, 0, 110, 135, 220, 270);
   inimigo = new Inimigo(matrizInimigo, imagemInimigo, width -52, 52, 52, 104, 104);
+  gameover = new GameOver(imagemGameOver);
   somDoJogo.loop();
+  somDoJogo.volume(0.3);
   frameRate(40);
 }
 
 function keyPressed(){
   if(key == 'ArrowUp'){
     personagem.pula();
-    somDoPulo.play();
+  }
+  
+  if(personagem.estaColidindo(inimigo)){
+    if(key === ' '){
+      window.location.reload();
+    }
   }
 }
 
@@ -93,6 +102,10 @@ function draw() {
   if(personagem.estaColidindo(inimigo)){
     console.log('Capotou o corsa');
     noLoop();
+    gameover.exibe();
+    somDoJogo.stop();
+    somGameOver.play();
+    somGameOver.volume(0.3)
   }
 }
 

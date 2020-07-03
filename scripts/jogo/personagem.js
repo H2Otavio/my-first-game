@@ -1,36 +1,48 @@
 class Personagem extends Animacao{
-  constructor(matriz, imagem, x, largura, altura, larguraSprite, alturaSprite){
-    super(matriz, imagem, x, largura, altura, larguraSprite, alturaSprite)
+  constructor(matriz, imagem, x, variacaoY, largura, altura, larguraSprite, alturaSprite){
+    super(matriz, imagem, x, variacaoY, largura, altura, larguraSprite, alturaSprite)
     this.frameAtual = 0;
     
-    this.yInicial = height - this.altura;
+    this.variacaoY = variacaoY;
+    this.yInicial = height - this.altura - this.variacaoY;
     this.y = this.yInicial;
     
     this.contadorPulo = 0;
     this.velocidadeDoPulo = 0;
-    this.gravidade = 3;
+    this.gravidade = 4;
+    this.alturaPulo = -40;
+    this.invencivel = false;
   }
   
   pula(){
-    if(this.contadorPulo < 1){
-        this.velocidadeDoPulo = -30;
+    if(this.contadorPulo < 2){
+        this.velocidadeDoPulo = this.alturaPulo;
         somDoPulo.play();
         this.contadorPulo++;
       }
   }
   
   aplicaGravidade(){
-    if(this.y == this.yInicial) this.contadorPulo = 0;
     this.y += this.velocidadeDoPulo;
     this.velocidadeDoPulo += this.gravidade;
     
     if(this.y > this.yInicial){
          this.y = this.yInicial;
+         this.contadorPulo = 0;
     }
   }
   
+  tornarInvencivel(){
+    this.invencivel = true;
+    setTimeout(() => {
+      this.invencivel = false;
+    }, 1000)
+  }
+  
   estaColidindo(inimigo){
-    const precisao = .7
+    if(this.invencivel) return false;
+    
+    const precisao = 0.7;
     const colisao = collideRectRect(this.x,
                     this.y,
                     this.largura * precisao,
